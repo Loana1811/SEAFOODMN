@@ -1,0 +1,73 @@
+﻿<Window x:Class="ASM_GROUP3.View.AdminHome"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Trang quản trị hệ thống" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Background="#f0f4f8">
+
+    <Window.Resources>
+        <DropShadowEffect x:Key="ShadowEffect" Color="Black" Opacity="0.3" BlurRadius="15"/>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="0,10,0,0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="12"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Border Background="White"
+                CornerRadius="20"
+                Padding="30"
+                Width="420"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Effect="{StaticResource ShadowEffect}">
+
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="320">
+
+                <TextBlock Text="Quản lí hải sản"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="#2c3e50"
+                           HorizontalAlignment="Center"
+                           Margin="0 0 0 25"/>
+
+                <Button Content="📦 Quản lý sản phẩm "
+                        Background="#3498db"
+                        Click="Seafood_Click"/>
+
+                <Button Content="🛒 Quản lý Đơn hàng"
+                        Background="#2ecc71"
+                        Click="BtnDonHang_Click"/>
+
+                <Button Content="📥 Quản lý Nhập hàng"
+                        Background="#e67e22"
+                        Click="ImportOrder_Click"/>
+
+                <Button Content="🏭 Quản lý Nhà cung cấp"
+                        Background="#9b59b6"
+                        Click="Supplier_Click"/>
+
+                <Button Content="📊 Thống kê"
+                        Background="#1abc9c"
+                        Click="Statistic_Click"/>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

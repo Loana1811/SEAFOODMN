@@ -1,0 +1,44 @@
+﻿<Window x:Class="ASM_GROUP3.View.StatisticsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:ASM_GROUP3.ViewModel"
+        Title="Thống kê" Height="600" Width="1000">
+
+    <Grid Margin="10">
+        <TabControl>
+            <TabItem Header="Doanh thu theo tháng">
+                <DataGrid ItemsSource="{Binding MonthlyRevenues}" AutoGenerateColumns="False" Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Năm" Binding="{Binding Year}" Width="*"/>
+                        <DataGridTextColumn Header="Tháng" Binding="{Binding Month}" Width="*"/>
+                        <DataGridTextColumn Header="Tổng doanh thu" Binding="{Binding TotalRevenue, StringFormat=N0}" Width="*"/>
+                        <DataGridTextColumn Header="Số đơn hàng" Binding="{Binding OrderCount}" Width="*"/>
+                        <DataGridTextColumn Header="Tổng số lượng bán" Binding="{Binding TotalQuantity}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <TabItem Header="Sản phẩm bán chạy">
+                <DataGrid ItemsSource="{Binding BestSellingSeafoods}" AutoGenerateColumns="False" Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Tên hải sản" Binding="{Binding SeafoodName}" Width="*"/>
+                        <DataGridTextColumn Header="Số lượng bán" Binding="{Binding TotalSold}" Width="*"/>
+                        <DataGridTextColumn Header="Tổng doanh thu" Binding="{Binding TotalRevenue, StringFormat=N0}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <TabItem Header="Nhập hàng theo tháng">
+                <DataGrid ItemsSource="{Binding ImportSummaries}" AutoGenerateColumns="False" Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Năm" Binding="{Binding Year}" Width="*"/>
+                        <DataGridTextColumn Header="Tháng" Binding="{Binding Month}" Width="*"/>
+                        <DataGridTextColumn Header="Tổng tiền nhập" Binding="{Binding TotalImport, StringFormat=N0}" Width="*"/>
+                        <DataGridTextColumn Header="Số đơn nhập" Binding="{Binding ImportOrderCount}" Width="*"/>
+                        <DataGridTextColumn Header="Tổng mặt hàng" Binding="{Binding TotalItems}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

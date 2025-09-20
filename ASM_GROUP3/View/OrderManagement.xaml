@@ -1,0 +1,110 @@
+﻿<Window x:Class="ASM_GROUP3.View.OrderManagement"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:ASM_GROUP3.ViewModel"
+        Title="Quản lý Đơn hàng" Height="750" Width="1100"
+        Language="en-US">
+
+    <Window.DataContext>
+        <vm:OrderViewModel/>
+    </Window.DataContext>
+
+    <ScrollViewer>
+        <StackPanel Margin="10">
+            <GroupBox Header="Thông tin đơn hàng" FontWeight="Bold">
+                <StackPanel x:Name="PrintArea" Margin="10">
+                    <!-- Thông tin khách hàng -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="250"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Khách hàng:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding SelectedOrder.Customer}" Grid.Row="0" Grid.Column="1"/>
+
+                        <TextBlock Text="SĐT:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding SelectedOrder.Phone}" Grid.Row="1" Grid.Column="1"/>
+
+                        <TextBlock Text="Địa chỉ:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding SelectedOrder.Address}" Grid.Row="2" Grid.Column="1"/>
+
+                        <TextBlock Text="Ghi chú:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding SelectedOrder.Note}" Grid.Row="3" Grid.Column="1"/>
+
+                        <WrapPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" Margin="10 0 0 0">
+                            <Button Content="Thêm Đơn" Command="{Binding AddOrderCommand}" Margin="5"/>
+                            <Button Content="Xóa Đơn" Command="{Binding DeleteOrderCommand}" Margin="5"/>
+                            <Button Content="Lưu Đơn" Command="{Binding SaveOrderCommand}" Margin="5"/>
+                            <Button Content="In Đơn" Command="{Binding PrintOrderCommand}" Margin="5"/>
+                        </WrapPanel>
+                    </Grid>
+
+                    <!-- Nhập chi tiết đơn hàng -->
+                    <StackPanel Margin="0,20,0,0">
+                        <TextBlock Text="Thêm sản phẩm vào đơn hàng" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <WrapPanel Margin="0,0,0,10">
+                            <TextBlock Text="Chọn hải sản:" VerticalAlignment="Center" Margin="5"/>
+                            <ComboBox ItemsSource="{Binding Seafoods}" SelectedItem="{Binding SelectedSeafood}"
+                                      DisplayMemberPath="DisplayInfo" Width="200" Margin="5"/>
+
+                            <TextBlock Text="Số lượng:" VerticalAlignment="Center" Margin="5"/>
+                            <TextBox Text="{Binding InputQuantity, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"
+                                     Width="80" Margin="5"
+                                     PreviewTextInput="NumericOnly_PreviewTextInput"
+                                     PreviewKeyDown="TextBox_PreviewKeyDown"/>
+
+                            <TextBlock Text="Đơn giá:" VerticalAlignment="Center" Margin="5"/>
+                            <TextBox Text="{Binding InputUnitPrice, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"
+                                     Width="100" Margin="5"
+                                     PreviewTextInput="NumericOnly_PreviewTextInput"
+                                     PreviewKeyDown="TextBox_PreviewKeyDown"/>
+
+                            <TextBlock Text="Thành tiền:" VerticalAlignment="Center" Margin="5"/>
+                            <TextBox Text="{Binding InputSubtotal, Mode=OneWay, StringFormat=N2}"
+                                     Width="100" Margin="5" IsReadOnly="True"/>
+
+                            <Button Content="Thêm chi tiết" Command="{Binding AddOrderDetailCommand}" Margin="10 0"/>
+                        </WrapPanel>
+
+                        <DataGrid ItemsSource="{Binding OrderDetails}" SelectedItem="{Binding SelectedOrderDetail}"
+                                  AutoGenerateColumns="False" CanUserAddRows="False" Height="200">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Hải sản" Binding="{Binding Seafood.Name}" Width="200"/>
+                                <DataGridTextColumn Header="Số lượng" Binding="{Binding Quantity}" Width="100"/>
+                                <DataGridTextColumn Header="Đơn giá" Binding="{Binding UnitPrice, StringFormat=N2}" Width="100"/>
+                                <DataGridTextColumn Header="Thành tiền" Binding="{Binding Subtotal, StringFormat=N2}" Width="120"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <Button Content="Xóa chi tiết" Command="{Binding DeleteOrderDetailCommand}" Margin="5" Width="120"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Danh sách đơn hàng -->
+            <DataGrid ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}"
+                      AutoGenerateColumns="False" Margin="0,10,0,0" CanUserAddRows="False" Height="300">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã" Binding="{Binding OrderId}" Width="50"/>
+                    <DataGridTextColumn Header="Ngày tạo" Binding="{Binding CreatedDate}" Width="150"/>
+                    <DataGridTextColumn Header="Khách hàng" Binding="{Binding Customer}" Width="150"/>
+                    <DataGridTextColumn Header="SĐT" Binding="{Binding Phone}" Width="120"/>
+                    <DataGridTextColumn Header="Địa chỉ" Binding="{Binding Address}" Width="200"/>
+                    <DataGridTextColumn Header="Ghi chú" Binding="{Binding Note}" Width="200"/>
+                    <DataGridTextColumn Header="Tổng tiền" Binding="{Binding TotalAmount, StringFormat=N2}" Width="100"/>
+                    <DataGridCheckBoxColumn Header="Đã in" Binding="{Binding IsPrinted}" Width="70"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
